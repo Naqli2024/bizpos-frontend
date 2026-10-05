@@ -1,0 +1,72 @@
+/* =========================================================
+   APP LAYOUT THEME
+========================================================= */
+
+.app-layout {
+  --layout-bg: #eef2f9;
+  --layout-card: #ffffff;
+  --layout-text: #121a2e;
+  --layout-muted: #6b7794;
+  --layout-border: #e1e7f2;
+
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--layout-bg);
+  color: var(--layout-text);
+}
+
+
+.app-layout[data-theme="dark"] {
+  --layout-bg: #121a2e;
+  --layout-card: #151c2c;
+  --layout-text: #e8edf8;
+  --layout-muted: #8f9bb8;
+  --layout-border: #263149;
+}
+
+.app-layout .biz-sidebar {
+  flex: 0 0 250px;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+  background: var(--layout-bg);
+  color: var(--layout-text);
+  overflow-x: hidden;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.main-content > * {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991.98px) {
+  .app-layout .biz-sidebar {
+    flex: 0 0 0;
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .main-content {
+    padding: 16px;
+  }
+}
