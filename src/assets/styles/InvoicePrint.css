@@ -1,0 +1,423 @@
+.invoice-print-page {
+  min-height: 100vh;
+  background: #f2f2f2;
+  padding: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+}
+
+.invoice-print {
+  width: 794px;
+  min-height: 1123px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 24px 26px 18px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+/* ================= HEADER ================= */
+
+.print-header {
+  position: relative;
+}
+
+.invoice-title {
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.invoice-title h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.invoice-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.invoice-meta strong {
+  font-weight: 500;
+}
+
+/* ================= PARTY ================= */
+
+.party-section {
+  display: flex;
+  justify-content: space-between;
+  min-height: 180px;
+  margin-top: 10px;
+}
+
+.seller-details {
+  width: 50%;
+}
+
+.seller-logo {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seller-logo img {
+  max-width: 72px;
+  max-height: 72px;
+  object-fit: contain;
+}
+
+.seller-details h3,
+.customer-details h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.seller-details p,
+.customer-details p {
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.gst-text {
+  color: #64748b;
+}
+
+.customer-details {
+  width: 50%;
+  position: relative;
+  padding-top: 72px;
+}
+
+.qr-wrapper {
+  position: absolute;
+  right: 8px;
+  top: 0;
+}
+
+.qr-wrapper svg {
+  width: 88px;
+  height: 88px;
+}
+
+.bill-to {
+  margin-left: 0;
+}
+
+.bill-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.invoice-divider {
+  height: 1px;
+  background: #bdbdbd;
+  margin-bottom: 18px;
+}
+
+/* ================= ITEMS TABLE ================= */
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 12px;
+}
+
+.items-table th,
+.items-table td {
+  border: 1px solid #111;
+}
+
+.items-table th {
+  height: 46px;
+  padding: 5px 4px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.items-table th span {
+  font-weight: 500;
+}
+
+.items-table td {
+  padding: 6px 5px;
+  vertical-align: top;
+}
+
+.sl-col {
+  width: 38px;
+}
+
+.description-col {
+  width: 160px;
+}
+
+.hsn-col {
+  width: 75px;
+}
+
+.qty-col {
+  width: 74px;
+}
+
+.tax-rate-col {
+  width: 98px;
+}
+
+.rate-col {
+  width: 66px;
+}
+
+.per-col {
+  width: 38px;
+}
+
+.amount-col {
+  width: 84px;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.item-name {
+  font-weight: 700;
+}
+
+.amount {
+  font-weight: 700;
+}
+
+.item-row {
+  height: 230px;
+}
+
+.tax-space-row {
+  height: 72px;
+}
+
+.tax-space-row td {
+  vertical-align: bottom;
+}
+
+.tax-labels {
+  text-align: right;
+  padding-right: 18px !important;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.tax-labels div,
+.tax-values div {
+  height: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.tax-values {
+  text-align: right;
+  font-weight: 600;
+}
+
+.total-row {
+  height: 32px;
+}
+
+.total-row td {
+  vertical-align: middle;
+}
+
+.total-label {
+  text-align: right;
+  font-weight: 700;
+  padding-right: 15px !important;
+}
+
+.total-qty {
+  text-align: center;
+  font-weight: 700;
+}
+
+.total-amount {
+  font-weight: 700;
+}
+
+/* ================= AMOUNT ================= */
+
+.amount-section {
+  display: flex;
+  justify-content: space-between;
+  min-height: 52px;
+  padding-top: 3px;
+}
+
+.amount-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.small-label {
+  font-size: 11px;
+}
+
+.due-amount {
+  margin-top: 1px;
+}
+
+.eoe {
+  font-size: 10px;
+  font-style: italic;
+  align-self: flex-end;
+  margin-bottom: 4px;
+}
+
+/* ================= TAX SUMMARY ================= */
+
+.tax-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.tax-summary-table th,
+.tax-summary-table td {
+  border: 1px solid #111;
+  padding: 3px 4px;
+}
+
+.tax-summary-table th {
+  text-align: center;
+  font-weight: 600;
+  height: 20px;
+}
+
+.tax-summary-table td {
+  height: 16px;
+}
+
+.tax-total td {
+  font-weight: 700;
+}
+
+/* ================= TAX WORDS ================= */
+
+.tax-words {
+  margin-top: 12px;
+  font-size: 11px;
+}
+
+.tax-words strong {
+  font-weight: 700;
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  min-height: 110px;
+  margin-top: 12px;
+}
+
+.declaration {
+  width: 65%;
+}
+
+.underline-title {
+  display: inline-block;
+  border-bottom: 1px solid #111;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.declaration p {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 10px;
+}
+
+.signature {
+  width: 32%;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.signature > strong {
+  font-size: 11px;
+}
+
+.signature-space {
+  height: 55px;
+}
+
+.signature span {
+  font-size: 11px;
+}
+
+/* ================= FOOTER ================= */
+
+.generated-footer {
+  text-align: center;
+  font-size: 10px;
+  text-decoration: underline;
+  margin-top: 4px;
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .invoice-print-page {
+    padding: 0;
+    background: #fff;
+    min-height: auto;
+  }
+
+  .invoice-print {
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    padding: 24px 26px 18px;
+    box-shadow: none;
+  }
+}
+
+/* ================= MOBILE PREVIEW ================= */
+
+@media screen and (max-width: 850px) {
+  .invoice-print-page {
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .invoice-print {
+    margin: 0;
+  }
+}

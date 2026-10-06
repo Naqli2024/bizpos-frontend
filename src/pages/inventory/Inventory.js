@@ -87,6 +87,8 @@ const PRODUCTS = [
 ];
 
 const LOW_STOCK_LIMIT = 6;
+const PAGE_SIZE = 5;
+
 const money = (n) => `₹${n.toFixed(2)}`;
 const statusOf = (p) => (p.qty <= LOW_STOCK_LIMIT ? "Low" : "Active");
 
@@ -113,12 +115,14 @@ const icons = {
       <path d="m20 20-3.5-3.5" />
     </>
   ),
+
   bell: (
     <>
       <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
       <path d="M10 21a2 2 0 0 0 4 0" />
     </>
   ),
+
   plus: <path d="M12 5v14M5 12h14" />,
 
   trash: (
@@ -128,12 +132,18 @@ const icons = {
       <path d="M19 6l-1 14H6L5 6" />
     </>
   ),
+
+  left: <path d="m15 18-6-6 6-6" />,
+
+  right: <path d="m9 18 6-6-6-6" />,
+
   sun: (
     <>
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
     </>
   ),
+
   moon: <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />,
 };
 
@@ -141,17 +151,37 @@ export default function Inventory({ theme }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [status, setStatus] = useState("All Status");
+  const [page, setPage] = useState(1);
+
   const categories = useMemo(
     () => ["All Categories", ...new Set(PRODUCTS.map((p) => p.category))],
     [],
   );
 
-  const rows = PRODUCTS.filter(
-    (p) =>
-      p.name.toLowerCase().includes(query.toLowerCase()) &&
-      (category === "All Categories" || p.category === category) &&
-      (status === "All Status" || statusOf(p) === status),
+  // Apply search and filters before pagination.
+  const filteredProducts = useMemo(
+    () =>
+      PRODUCTS.filter(
+        (p) =>
+          p.name.toLowerCase().includes(query.toLowerCase()) &&
+          (category === "All Categories" || p.category === category) &&
+          (status === "All Status" || statusOf(p) === status),
+      ),
+    [query, category, status],
   );
+
+  const pages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+
+  // Keep the current page valid when filters change.
+  const currentPage = Math.min(page, pages);
+  const start = (currentPage - 1) * PAGE_SIZE;
+
+  const rows = filteredProducts.slice(start, start + PAGE_SIZE);
+
+  // Reset to page 1 when the search or filters change.
+  useEffect(() => {
+    setPage(1);
+  }, [query, category, status]);
 
   return (
     <div className="inv" data-theme={theme}>
@@ -169,6 +199,7 @@ export default function Inventory({ theme }) {
           <button className="icon-btn has-dot" aria-label="Notifications">
             <Icon d={icons.bell} />
           </button>
+
           <div className="inv-user">
             <span className="avatar" aria-hidden="true">
               A
@@ -187,8 +218,10 @@ export default function Inventory({ theme }) {
             <h1>Inventory</h1>
             <p>Manage your products and stock.</p>
           </div>
+
           <button className="btn-primary">
-            <Icon d={icons.plus} size={16} /> Add Product
+            <Icon d={icons.plus} size={16} />
+            Add Product
           </button>
         </div>
 
@@ -203,6 +236,7 @@ export default function Inventory({ theme }) {
               aria-label="Search product"
             />
           </label>
+
           <select
             className="field"
             value={category}
@@ -213,6 +247,7 @@ export default function Inventory({ theme }) {
               <option key={c}>{c}</option>
             ))}
           </select>
+
           <select
             className="field"
             value={status}
@@ -239,32 +274,41 @@ export default function Inventory({ theme }) {
                 <th className="col-actions">Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {rows.map((p, i) => {
                 const s = statusOf(p);
+
                 return (
                   <tr key={p.id}>
                     <td data-label="#" className="col-num">
-                      {i + 1}
+                      {start + i + 1}
                     </td>
+
                     <td data-label="Product" className="col-name">
                       <span className="thumb" aria-hidden="true">
                         {p.icon}
                       </span>
                       {p.name}
                     </td>
+
                     <td data-label="Category">{p.category}</td>
+
                     <td
                       data-label="Stock Qty"
                       className={s === "Low" ? "qty low" : "qty"}
                     >
                       {p.qty}
                     </td>
+
                     <td data-label="Purchase Price">{money(p.buy)}</td>
+
                     <td data-label="Selling Price">{money(p.sell)}</td>
+
                     <td data-label="Status">
                       <span className={`badge ${s.toLowerCase()}`}>{s}</span>
                     </td>
+
                     <td className="col-actions">
                       <button
                         className="act edit"
@@ -272,6 +316,7 @@ export default function Inventory({ theme }) {
                       >
                         <MdEdit />
                       </button>
+
                       <button
                         className="act del"
                         aria-label={`Delete ${p.name}`}
@@ -282,6 +327,7 @@ export default function Inventory({ theme }) {
                   </tr>
                 );
               })}
+
               {rows.length === 0 && (
                 <tr className="empty-row">
                   <td colSpan="8">
@@ -293,9 +339,44 @@ export default function Inventory({ theme }) {
             </tbody>
           </table>
 
+          {/* Pagination - same pattern as Payments */}
           <footer className="inv-foot">
-            Showing {rows.length ? `1-${rows.length}` : "0"} of{" "}
-            {PRODUCTS.length} items
+            <span>
+              Showing{" "}
+              {filteredProducts.length
+                ? `${start + 1}-${start + rows.length}`
+                : "0"}{" "}
+              of {filteredProducts.length} items
+            </span>
+
+            <nav className="pager" aria-label="Inventory pagination">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setPage(currentPage - 1)}
+                aria-label="Previous page"
+              >
+                <Icon d={icons.left} size={15} />
+              </button>
+
+              {Array.from({ length: pages }, (_, n) => n + 1).map((n) => (
+                <button
+                  key={n}
+                  className={n === currentPage ? "on" : ""}
+                  aria-current={n === currentPage ? "page" : undefined}
+                  onClick={() => setPage(n)}
+                >
+                  {n}
+                </button>
+              ))}
+
+              <button
+                disabled={currentPage === pages}
+                onClick={() => setPage(currentPage + 1)}
+                aria-label="Next page"
+              >
+                <Icon d={icons.right} size={15} />
+              </button>
+            </nav>
           </footer>
         </section>
       </div>

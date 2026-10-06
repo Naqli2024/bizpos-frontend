@@ -20,8 +20,6 @@
   --shadow:
     0 1px 2px rgba(18, 26, 46, 0.05),
     0 8px 24px rgba(18, 26, 46, 0.06);
-
-  min-height: 100vh;
   background: var(--bg);
   color: var(--text);
 
@@ -576,6 +574,52 @@ select.field {
 
   background: var(--surface);
   color: var(--text);
+}
+
+.pager button:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.pager button.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.pager button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.inv-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.pager button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
 }
 
 .pager button:hover:not(:disabled) {

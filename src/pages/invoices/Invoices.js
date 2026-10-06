@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "../../assets/styles/invoice.css";
+import InvoicePrint from "./InvoicePrint";
+import { useNavigate } from "react-router-dom";
 
 const INVOICES = [
   {
@@ -162,6 +164,7 @@ export default function Invoices({ theme }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("All Status");
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   const filtered = useMemo(
     () =>
@@ -179,6 +182,10 @@ export default function Invoices({ theme }) {
   const current = Math.min(page, pages);
   const start = (current - 1) * PAGE_SIZE;
   const rows = filtered.slice(start, start + PAGE_SIZE);
+
+  const handlePrint = (invoiceNo) => {
+    navigate(`/invoices/${invoiceNo}`);
+  };
 
   return (
     <div className="invoice" data-theme={theme}>
@@ -277,7 +284,11 @@ export default function Invoices({ theme }) {
                     <button className="act view" aria-label={`View ${i.no}`}>
                       <Icon d={icons.eye} size={15} />
                     </button>
-                    <button className="act print" aria-label={`Print ${i.no}`}>
+                    <button
+                      className="act print"
+                      aria-label={`Print ${i.no}`}
+                      onClick={() => handlePrint(i.no)}
+                    >
                       <Icon d={icons.print} size={15} />
                     </button>
                     <button className="act del" aria-label={`Delete ${i.no}`}>

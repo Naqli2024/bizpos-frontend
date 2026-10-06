@@ -45,14 +45,8 @@ const icons = {
   moon: <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />,
 };
 
-export default function Settings() {
-  const [theme, setTheme] = useState(() => {
-    try {
-      const saved = localStorage.getItem("payment-theme");
-      if (saved) return saved;
-    } catch {}
-    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
+export default function Payments({theme}) {
+ 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -81,7 +75,7 @@ export default function Settings() {
       </header>
 
       <main className="payment-main">
-        <h1>Settings</h1>
+        <h1>Payments</h1>
         <p className="payment-sub">Track and manage payment transactions.</p>
 
         <section className="payment-summary">
@@ -107,7 +101,7 @@ export default function Settings() {
             <thead>
               <tr>
                 <th>Payment ID</th>
-                <th>Invoice #</th>
+                <th>Invoice </th>
                 <th>Method</th>
                 <th>Amount</th>
                 <th>Status</th>

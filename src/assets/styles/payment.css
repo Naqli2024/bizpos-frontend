@@ -15,9 +15,6 @@
   --danger: #e5484d;
   --danger-soft: #ffe8e9;
   --shadow: 0 6px 24px rgba(30, 50, 110, 0.07);
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
   font-family:
     "Inter",
     system-ui,

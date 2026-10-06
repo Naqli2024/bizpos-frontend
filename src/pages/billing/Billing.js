@@ -324,7 +324,7 @@ export default function Billing({ theme }) {
 
           <fieldset className="payment">
             <legend>Payment Method</legend>
-            <div className="payment__options">
+            <div className="payment-options">
               {PAYMENT_METHODS.map((m) => (
                 <button
                   key={m}
